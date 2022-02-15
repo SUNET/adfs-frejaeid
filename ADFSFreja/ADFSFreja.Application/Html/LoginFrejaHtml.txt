@@ -1,0 +1,102 @@
+﻿<div id="loginArea">
+<style>
+        @keyframes ProgressFlagAnimation {
+            from {
+                left: 0px;
+            }
+
+            to {
+                left: 350px;
+            }
+        }
+
+        .ProgressFlag.Show {
+            opacity: 1;
+        }
+
+        .ProgressFlag > div {
+            width: 2px;
+            height: 2px;
+            margin: 0 5px;
+            background: blue;
+            position: relative;
+            -webkit-animation: ProgressFlagAnimation 1.45s infinite ease-in-out; /*Chrome, Safari, Opera */
+            -webkit-animation-delay: -2s; /*Chrome, Safari, Opera */
+            animation: ProgressFlagAnimation 5s infinite ease-in-out;
+            animation-delay -2s;
+            text-align: center;
+            display: inline-block;
+         }
+
+         .ProgressFlag > div:nth-child(1) {
+            -webkit-animation-delay: .0s;
+         }
+
+         .ProgressFlag > div:nth-child(2) {
+            -webkit-animation-delay: .2s;
+         }
+
+         .ProgressFlag > div:nth-child(3) {
+            -webkit-animation-delay: .4s;
+         }
+    </style>
+<script type="text/javascript" language="JavaScript">
+    //<![CDATA[
+
+        function LoginFreja() {
+        }
+
+        LoginFreja.passwordInput = 'civicnumberInput';
+
+        LoginFreja.initialize = function () {
+        }();
+
+        LoginFreja.submitFrejaLoginRequest = function () { 
+
+            console.log("Start");
+            var submitFreja = document.getElementById('submitButton');
+            submitFreja.removeAttribute('onclick');
+            submitFreja.disabled = true;
+            submitFreja.style.background = 'gray';
+            submitFreja.style.display = 'none';
+            var civicNumber = document.getElementById(LoginFreja.civicnumberInput);
+            document.getElementById('Progress').style.visibility = 'visible';
+            document.getElementById('frejaInstruction').style.visibility = 'visible';
+            console.log("Pre-Submit");
+            document.forms['loginForm'].submit();
+            console.log("End");		
+            return false;
+        };
+
+    //]]>
+    </script>
+
+    <form method="post" id="loginForm" >
+        <div id="error" class="fieldMargin error smallText">
+            <label id="errorText" for="%LoginPageErrorCause%">%PageIntroductionText%</label>
+        </div>
+
+        <!-- These inputs are required by the presentation framework. Do not modify or remove -->
+        <input id="authMethod" type="hidden" name="AuthMethod" value="%AuthMethod%" />
+        <input id="context" type="hidden" name="Context" value="%Context%" />
+        <!-- End inputs are required by the presentation framework. -->
+        <img src="/adfs/portal/images/freja_eid2.jpg" alt="Freja eID"/>
+        <div id="formsAuthenticationArea">
+             <div id="loginMessage" class="groupMargin">%PageFrejaInstruction%</div>
+             <div id="frejaInstructionText" class="text textPaginated fullWidth">%PageFrejaIntroductionText%</div>
+             <div id="civicnumberInput" name="CivicNumberInput" tabindex="2" class="bigText textPaginated fullWidth">%CivicNumberInput%</div>
+             
+            <div id="submissionArea" class="submitMargin">
+                <span id="submitButton" class="submit" tabindex="4" 
+                    onKeyPress="if (event && event.keyCode == 32) LoginFreja.submitFrejaLoginRequest();" 
+                    onclick="LoginFreja.submitFrejaLoginRequest();">%PageSubmitButtonLabel%</span>
+            </div>
+            <div id="Progress" class="ProgressFlag" style="visibility: hidden;">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div id="frejaInstruction" class="text textPaginated fullWidth" style="visibility: hidden;">%PageFrejaInstruction%</div>
+        </div>
+    </form>
+</div>

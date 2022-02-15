@@ -1,0 +1,24 @@
+{
+  "FrejaSettings": {
+    "RPCertificateThumbprint": "aaa45cb228269d7ee7e50e8cb3c9788c3b3b3594",
+    "AuthURL": "https://services.test.frejaeid.com/authentication/1.0/initAuthentication",
+    "AuthOneResultURL": "https://services.test.frejaeid.com/authentication/1.0/getOneResult",
+    "CancelRequestURL": "https://services.test.frejaeid.com/authentication/1.0/cancel"
+  },
+  "UserLookupMethod": "SQL",
+  "LdapSettings": {
+    "UserName": "",
+    "Password": "",
+    "SearchRoot": "LDAP://dc=,dc=,dc=se",
+    "Filter": "(&(objectClass=user)(sAMAccountName={0}))",
+    "AttributeToRetrieve": "samAccountName"
+  },
+  "SqlSettings": {
+    "Settings": [
+      {
+        "ConnectionString": "Server=.;Database=;Integrated security=true;",
+        "Command": "Select nin from person where uid = @uid"
+      }
+    ]
+  }
+}

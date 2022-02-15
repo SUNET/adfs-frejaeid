@@ -1,0 +1,91 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADFSFrejaMFA", "ADFSFrejaMFA\ADFSFrejaMFA.csproj", "{1355C3E7-92AA-4B49-845B-5385A3119AB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADFSFrejaMFATest", "ADFSFrejaMFATest\ADFSFrejaMFATest.csproj", "{53F486E3-636E-40A7-9C14-2A361AE29C38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freja", "Freja\Freja.csproj", "{2D6BA03C-2BCF-4881-BCE8-CD8B44A9F9E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADFSFrejaSecondFactor", "ADFSFrejaSecondFactor\ADFSFrejaSecondFactor.csproj", "{30C88F3A-766C-4073-9EDF-543583F1CFDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QRCodeWebTest", "QRCodeWebTest\QRCodeWebTest.csproj", "{4F36279E-6B54-4F4E-82FE-6584C7ADF2BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADFSFreja.Application", "ADFSFreja.Application\ADFSFreja.Application.csproj", "{9D52FB64-6D3B-4F00-BCDA-B9BA6DB29BCD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{1771EE8B-F89C-41D2-B363-ABC0217BEF95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2016", "2016", "{D80F20F9-BFDB-442B-8B14-D11F892E3A4E}"
+	ProjectSection(SolutionItems) = preProject
+		2016\Microsoft.IdentityServer.Web.dll = 2016\Microsoft.IdentityServer.Web.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2019", "2019", "{AD3BD1B3-80B4-4C75-A88F-F0D72350E4F3}"
+	ProjectSection(SolutionItems) = preProject
+		2019\Microsoft.IdentityServer.Web.dll = 2019\Microsoft.IdentityServer.Web.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{577E6AD4-2BC7-4595-B3AD-ED1CBE8925EC}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\Install-ADFSFrejaMFA.ps1 = Scripts\Install-ADFSFrejaMFA.ps1
+		Scripts\Install-ADFSFrejaSecondFactor.ps1 = Scripts\Install-ADFSFrejaSecondFactor.ps1
+		Scripts\Uninstall-ADFSFrejaMFA.ps1 = Scripts\Uninstall-ADFSFrejaMFA.ps1
+		Scripts\Uninstall-ADFSFrejaSecondFactor.ps1 = Scripts\Uninstall-ADFSFrejaSecondFactor.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{E5F40BB2-4652-46DA-A146-8773D43BA328}"
+	ProjectSection(SolutionItems) = preProject
+		Images\freja_eid.jpg = Images\freja_eid.jpg
+		Images\freja_eid2.jpg = Images\freja_eid2.jpg
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrejaConsole", "FrejaConsole\FrejaConsole.csproj", "{E14A3EC1-0F45-4112-93F1-1B130BB0B7F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1355C3E7-92AA-4B49-845B-5385A3119AB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1355C3E7-92AA-4B49-845B-5385A3119AB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1355C3E7-92AA-4B49-845B-5385A3119AB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1355C3E7-92AA-4B49-845B-5385A3119AB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53F486E3-636E-40A7-9C14-2A361AE29C38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53F486E3-636E-40A7-9C14-2A361AE29C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53F486E3-636E-40A7-9C14-2A361AE29C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53F486E3-636E-40A7-9C14-2A361AE29C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D6BA03C-2BCF-4881-BCE8-CD8B44A9F9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D6BA03C-2BCF-4881-BCE8-CD8B44A9F9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D6BA03C-2BCF-4881-BCE8-CD8B44A9F9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D6BA03C-2BCF-4881-BCE8-CD8B44A9F9E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30C88F3A-766C-4073-9EDF-543583F1CFDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C88F3A-766C-4073-9EDF-543583F1CFDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C88F3A-766C-4073-9EDF-543583F1CFDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C88F3A-766C-4073-9EDF-543583F1CFDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F36279E-6B54-4F4E-82FE-6584C7ADF2BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F36279E-6B54-4F4E-82FE-6584C7ADF2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F36279E-6B54-4F4E-82FE-6584C7ADF2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F36279E-6B54-4F4E-82FE-6584C7ADF2BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D52FB64-6D3B-4F00-BCDA-B9BA6DB29BCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D52FB64-6D3B-4F00-BCDA-B9BA6DB29BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D52FB64-6D3B-4F00-BCDA-B9BA6DB29BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D52FB64-6D3B-4F00-BCDA-B9BA6DB29BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E14A3EC1-0F45-4112-93F1-1B130BB0B7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E14A3EC1-0F45-4112-93F1-1B130BB0B7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E14A3EC1-0F45-4112-93F1-1B130BB0B7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E14A3EC1-0F45-4112-93F1-1B130BB0B7F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D80F20F9-BFDB-442B-8B14-D11F892E3A4E} = {1771EE8B-F89C-41D2-B363-ABC0217BEF95}
+		{AD3BD1B3-80B4-4C75-A88F-F0D72350E4F3} = {1771EE8B-F89C-41D2-B363-ABC0217BEF95}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {09939126-0DBB-45E9-97EB-CE42969D1495}
+	EndGlobalSection
+EndGlobal

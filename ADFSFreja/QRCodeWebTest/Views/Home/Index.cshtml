@@ -1,0 +1,159 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+.qr-code-image-centered {
+    margin: auto;
+}
+
+.qr-code-image-wrapper-large {
+    max-width: 270px;
+}
+
+.feid-qr-code-image-wrapper {
+    position: relative;
+}
+    .feid-qr-code-image-wrapper .feid-qr-code-image {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .feid-qr-code-image-disable {
+        opacity: 0.3;
+    }
+    .feid-qr-code-image-wrapper .feid-qr-code-image-overlay {
+      /*  position: absolute;*/
+        top: -10px;
+        left: -10px;
+        height: 100%;
+        width: 100%;
+        background-color: #ffffff90;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        padding: 10px;
+        -webkit-box-shadow: 0 4px 8px 0 rgb(35 31 32 / 20%);
+        -moz-box-shadow: 0 4px 8px 0 rgba(35,31,32,0.2);
+        box-shadow: 0 4px 8px 0 rgb(35 31 32 / 20%);
+    }
+        .feid-qr-code-image-wrapper .feid-qr-code-image-overlay .feid-qr-code-reload-icon {
+            opacity: 1;
+            background-color: #f7f6f7;
+            -webkit-border-radius: 100%;
+            -moz-border-radius: 100%;
+            border-radius: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+
+    .qr-code-reload-icon-large {
+        height: 120px;
+        width: 120px;
+    }
+    .feid-qr-code-reload-text {
+        max-width: 270px;
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        -webkit-transform: translate(-50%, 0);
+        -moz-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+    }
+        .feid-qr-code-reload-text p {
+            margin: 0;
+        }
+    p.feid-text, span.feid-text {
+        font-size: calc( 13px + 2 * ((100vw - 320px) / 880));
+    }
+
+    p.feid-text, span.feid-text {
+        font-size: 13px;
+    }
+
+    p.feid-text, span.feid-text {
+        font-family: "Montserrat",sans-serif;
+        line-height: 1.3;
+    }
+</style>
+<div class="row">
+    <div class="col" style="text-align: center">
+        <br />
+    </div>
+    <div class="col" style="text-align: center">
+        <br />
+    </div>
+
+    <div class="col" style="text-align: center">
+        <br />
+    </div>
+    <div class="col" style="text-align: center">
+        <br />
+    </div>
+    <div class="col" style="text-align: center">
+        <img src="data:image/svg+xml,%3Csvg width='64' height='64' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Ccircle fill='%233E3A94' cx='32' cy='32' r='32'/%3E%3Cg fill='%23F7F6F7'%3E%3Cpath d='M47.101 47.598a1.63 1.63 0 0 1-1.627-1.634 1.63 1.63 0 0 1 1.627-1.635c.9 0 1.627.732 1.627 1.635a1.63 1.63 0 0 1-1.627 1.634M38.374 52.439a1.833 1.833 0 0 1-2.149-2.158 1.832 1.832 0 0 1 1.434-1.44 1.833 1.833 0 0 1 2.15 2.158 1.833 1.833 0 0 1-1.435 1.44M27.836 52.716a1.975 1.975 0 0 1-2.316-2.326 1.976 1.976 0 0 1 1.546-1.554 1.976 1.976 0 0 1 2.317 2.327 1.975 1.975 0 0 1-1.547 1.553M19.121 48.045a2.12 2.12 0 0 1-2.485-2.497 2.117 2.117 0 0 1 1.658-1.665 2.12 2.12 0 0 1 2.486 2.496 2.12 2.12 0 0 1-1.659 1.666M13.977 39.406a2.208 2.208 0 0 1-2.588-2.6 2.207 2.207 0 0 1 1.727-1.735 2.208 2.208 0 0 1 2.589 2.6 2.207 2.207 0 0 1-1.728 1.735M13.546 29.282a2.287 2.287 0 0 1-2.281-2.292 2.287 2.287 0 0 1 2.281-2.292 2.288 2.288 0 0 1 2.283 2.292 2.288 2.288 0 0 1-2.283 2.292M18.961 20.733a2.37 2.37 0 0 1-2.365-2.375 2.37 2.37 0 0 1 2.365-2.375 2.37 2.37 0 0 1 2.365 2.375 2.37 2.37 0 0 1-2.365 2.375M27.345 15.848a2.418 2.418 0 0 1-2.414-2.424A2.418 2.418 0 0 1 27.345 11a2.42 2.42 0 0 1 2.414 2.424 2.42 2.42 0 0 1-2.414 2.424M37.737 34.284h-8.95a3.828 3.828 0 0 1-3.82-3.837v-9.272a2.393 2.393 0 0 1 2.387-2.398 2.393 2.393 0 0 1 2.388 2.398v7.355c0 .529.427.958.954.958h7.041c3.53 0 6.392-2.873 6.392-6.419 0-3.988-3.22-7.221-7.191-7.221h-1.91a2.393 2.393 0 0 1-2.388-2.398 2.393 2.393 0 0 1 2.388-2.398h1.91c6.61 0 11.966 5.38 11.966 12.017 0 6.194-4.999 11.215-11.167 11.215'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E" alt="freja eid logo">
+
+    </div>
+    <div class="col" style="text-align: center">
+        <h5 class="feid-heading heading-indigo heading-center">För att gå vidare med din ansökan<br>skanna med Freja eID</h5>
+    </div>
+    @*<div class="col" style="text-align: center">
+        <div class="col-xs-12">
+            <div class="box">
+                <div style="text-align: center;">
+                    <div>
+                        <div class="feid-qr-code-image-wrapper qr-code-image-wrapper-large qr-code-image-centered">
+                            <img src="https://resources.prod.frejaeid.com/qrcode/generate?qrcodedata=frejaeid%3A%2F%2FbindUserToTransaction%3FtransactionReference%3DLj6CgYCJsJLXAuAtiCCs1BaFx523tG5EeBwxpTAaD-c4pSCZfzvJJ7Jbj2Ea93RP&amp;dimension=8x" alt="QR Code" class="feid-qr-code-image feid-qr-code-image-disable">
+                            <div class="feid-qr-code-image-overlay">
+                                <div class="feid-qr-code-reload-icon qr-code-reload-icon-large">
+                                    <img src="data:image/svg+xml,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 24.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 24 24' style='enable-background:new 0 0 24 24;' xml:space='preserve'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%233A3ACC;%7D .st1%7Bfill:%233E3A94;%7D %3C/style%3E %3Cg%3E %3Cpath class='st0' d='M20.9,15.7C20.9,15.7,20.9,15.7,20.9,15.7C20.9,15.7,20.9,15.7,20.9,15.7z'/%3E %3Cpath class='st0' d='M23.1,16.6C23.1,16.6,23.1,16.6,23.1,16.6C23.1,16.6,23.1,16.6,23.1,16.6z'/%3E %3Cpath class='st1' d='M17.2,7.7c0,0.7,0.5,1.2,1.2,1.2h3.9c0.9,0,1.7-0.8,1.7-1.7l0-3.9c0-0.7-0.5-1.2-1.2-1.2 c-0.7,0-1.2,0.5-1.2,1.2v1.5c-3.4-4.6-9.7-6.2-15.1-3.5c-4.4,2.2-7,7.1-6.4,12c0.5,4.1,2.9,7.4,6.1,9.1c2.7,1.5,5.9,2,9.1,1 c3.6-1,6.4-3.6,7.8-6.9c0,0,0,0,0,0c0.1-0.1,0.1-0.3,0.1-0.5c0-0.7-0.5-1.2-1.2-1.2c-0.5,0-0.9,0.3-1.1,0.7c0,0,0,0,0,0 c-1.1,2.7-3.3,4.8-6.2,5.6c-5.2,1.5-10.6-1.6-11.9-6.8C1.5,9.8,4,4.9,8.4,3.1c4.2-1.7,8.8-0.3,11.4,3.2c0,0.1,0.1,0.1,0.2,0.1 l-1.5,0C17.7,6.5,17.2,7,17.2,7.7z'/%3E %3C/g%3E %3C/svg%3E" alt="reload icon">
+                                </div>
+                                <div class="feid-qr-code-reload-text">
+                                    <p class="feid-text text-indigo text-center text-strong">Klicka för att uppdatera</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    <div class="col" style="text-align: center">
+        <img id="emimage" src="" height="150" width="150" />
+    </div>
+    <div class="col" style="text-align: center">
+        <br />
+    </div>
+    <div class="col" style="text-align: center">
+        <input type="button" id="btngetemp" href="@Url.Action("QR", "Home")" value="Generate QR Code" />
+    </div>
+    <div class="col" style="text-align: center">
+        <br />
+    </div>
+    <div class="col" style="text-align: center">
+        <div class="box"><div style=" margin-right: 10px;"><a class="feid-link-external link-color-indigo" href="https://frejaeid.com/" target="_blank"><span class="feid-text text-indigo text-left">Skaffa Freja eID</span></a></div></div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+  $("#btngetemp").click(function () {
+      var url = $(this).attr("href");
+      $.ajax({
+          url: url,
+          success: function (result) {
+              debugger;
+              $("#emimage").attr("src", result);
+          },
+      });
+
+
+});
+});
+</script>
