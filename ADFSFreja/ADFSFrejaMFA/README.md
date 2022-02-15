@@ -12,12 +12,12 @@ For sql, multiple connections are available
 
 ### Copy files to ADFS
 Copy files to ADFS server (c:\admin\install\<ADFSFrejaSecondFactor>) from ADFSFrejaSecondFactor
-freja_eid2.jpg												\images\freja_eid2.jpg
-ADFSFrejaSecondFactorMerged.dll		\bin\<configuration>\ADFSFrejaSecondFactorMerged.dll
-FrejaSettings.json		
-Newtonsoft.json.dll		
-Install-ADFSFrejaSecondFactor.ps1		\scripts\
-Uninstall-ADFSFrejaSecondFactor.ps1	\scripts\
+- freja_eid2.jpg												\images\freja_eid2.jpg
+- ADFSFrejaSecondFactorMerged.dll		\bin\<configuration>\ADFSFrejaSecondFactorMerged.dll
+- FrejaSettings.json		
+- Newtonsoft.json.dll		
+- Install-ADFSFrejaSecondFactor.ps1		\scripts\
+- Uninstall-ADFSFrejaSecondFactor.ps1	\scripts\
 ### Install
 ```
 Install-ADFSFrejaSecondFactor.ps1 -InstallDirectory "path to folder" -ConfigFile "path to settingsfile <FrejaSettings.json>"
