@@ -7,6 +7,7 @@ using Freja.Model;
 using Freja.Service;
 using Microsoft.IdentityServer.Web.Authentication.External;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -115,9 +116,26 @@ namespace ADFSFrejaMFA
                         {
                             if(_frejaMFASettings.FrejaConfig!=null)
                             {
-
+                                Log.WriteEntry("Start to configure Freja", EventLogEntryType.Information, 335);
+                                var cert = CertificateUtils.LoadCertificateFromStore(_frejaMFASettings.FrejaConfig.RPCertificateThumbprint, StoreName.My, StoreLocation.LocalMachine) ??
+                                    CertificateUtils.LoadCertificateFromStore(_frejaMFASettings.FrejaConfig.RPCertificateThumbprint, StoreName.My, StoreLocation.CurrentUser);
+                                Log.WriteEntry("Freja created certificate", EventLogEntryType.Information, 335);
+                                var handler = new HttpClientHandler();
+                                handler.ClientCertificateOptions = ClientCertificateOption.Manual;
+                                handler.SslProtocols = SslProtocols.Tls12;
+                                handler.AllowAutoRedirect = true;
+                                handler.ClientCertificates.Add(cert);
+                                Log.WriteEntry("Freja created handler", EventLogEntryType.Information, 335);
+                                _httpClient = new HttpClient(handler);
+                                Log.WriteEntry("Freja created httpclient", EventLogEntryType.Information, 335);
+                                _frejaService = new FrejaService(_httpClient, _frejaMFASettings.FrejaConfig);
+                                Log.WriteEntry("Freja created logic", EventLogEntryType.Information, 335);
                             }
-                            else { Log.WriteEntry("No Settings provided for Freja api", EventLogEntryType.Error, 335); }
+                            else 
+                            { 
+                                Log.WriteEntry("No Settings provided for Freja api", EventLogEntryType.Error, 335); 
+                            }
+                            if(_frejaMFASettings.UserLookupMethod==null) { _frejaMFASettings.UserLookupMethod = ""; }
                             switch (_frejaMFASettings.UserLookupMethod.ToUpper())
                             {
                                 case "LDAP":
@@ -140,27 +158,15 @@ namespace ADFSFrejaMFA
                                         Log.WriteEntry("FrejaSecondFactor configuration, didn't get sql settings", EventLogEntryType.Information, 335);
                                     }
                                     break;
+                                default:
+                                    Log.WriteEntry("Unable to load Freja user lookup method. Check that UserLookupMethod is set (LDAP/SQL).",  EventLogEntryType.Error, 335);
+                                    throw new ArgumentException();
                             }
                         }
                         else 
                         { 
                             Log.WriteEntry("No Settings provided for FrejaMFAAdapter", EventLogEntryType.Error, 335); 
                         }
-                        
-                        Log.WriteEntry("Start to configure Freja", EventLogEntryType.Information, 335);
-                        var cert = CertificateUtils.LoadCertificateFromStore(_frejaMFASettings.FrejaConfig.RPCertificateThumbprint, StoreName.My, StoreLocation.LocalMachine) ??
-                            CertificateUtils.LoadCertificateFromStore(_frejaMFASettings.FrejaConfig.RPCertificateThumbprint, StoreName.My, StoreLocation.CurrentUser);
-                        Log.WriteEntry("Freja created certificate", EventLogEntryType.Information, 335);
-                        var handler = new HttpClientHandler();
-                        handler.ClientCertificateOptions = ClientCertificateOption.Manual;
-                        handler.SslProtocols = SslProtocols.Tls12;
-                        handler.AllowAutoRedirect = true;
-                        handler.ClientCertificates.Add(cert);
-                        Log.WriteEntry("Freja created handler", EventLogEntryType.Information, 335);
-                        _httpClient = new HttpClient(handler);
-                        Log.WriteEntry("Freja created httpclient", EventLogEntryType.Information, 335);
-                        _frejaService = new FrejaService(_httpClient, _frejaMFASettings.FrejaConfig);
-                        Log.WriteEntry("Freja created logic", EventLogEntryType.Information, 335);
                     }
                     catch (Exception ex)
                     {
@@ -252,7 +258,19 @@ namespace ADFSFrejaMFA
                 Log.WriteEntry("Starting Freja login with civicno: " + civicNumber, EventLogEntryType.Information, 335);
                 try
                 {
-                    var authTicket = _frejaService.RequestAuthTicket(civicNumber);
+                    var attributes = new List<ReturnAttribute>();
+                    attributes.Add(new ReturnAttribute { attribute = nameof(ReturnAttributes.SSN) });
+                    var authTicket = _frejaService.RequestAuthTicket(civicNumber, attributes);
+                    if (authTicket == null)
+                    {
+                        Log.WriteEntry("Error in Freja login: Couldn´t get authref code", EventLogEntryType.Error, 335);
+                        return CreateAdapterPresentationOnError(civicNumber, new ExternalAuthenticationException("FrejaResponse_REJECTED", authContext));
+                    }
+                    if (string.IsNullOrEmpty(authTicket.authRef))
+                    {
+                        Log.WriteEntry("Error in Freja login: Couldn´t get authref code", EventLogEntryType.Error, 335);
+                        return CreateAdapterPresentationOnError(civicNumber, new ExternalAuthenticationException("FrejaResponse_REJECTED", authContext));
+                    }
                     authResultRequest = new AuthResultRequest() { getOneAuthResultRequest = _frejaService.EncodeAuthTicket(authTicket) };
                 }
                 catch(Exception ex)

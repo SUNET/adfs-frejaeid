@@ -31,16 +31,20 @@ namespace Freja.Service
             ContractResolver = ShouldSerializeContractResolver.Instance,
         };
 
-        public string CreateEncodedSSNRequest(string ssn, string country, AuthLevel authLevel)
+        public string CreateEncodedSSNRequest(string ssn, string country, AuthLevel authLevel, List<ReturnAttribute> returnAttributes =null)
         {
             var userInfo = new SsnUserInfo() { country = country, ssn = ssn };
             var encodedUserInfo = EncodeUserInfo(userInfo);
+            if (returnAttributes == null)
+            {
+                returnAttributes = GetReturnAttributes(authLevel);
+            }
             var payload = new Payload()
             {
                 userInfoType = "SSN",
                 userInfo = encodedUserInfo,
                 minRegistrationLevel = "PLUS",
-                attributesToReturn = GetReturnAttributes(authLevel) // new List<ReturnAttribute>() { new ReturnAttribute() { attribute = "BASIC_USER_INFO" } 
+                attributesToReturn = returnAttributes // new List<ReturnAttribute>() { new ReturnAttribute() { attribute = "BASIC_USER_INFO" } 
             };
             var encodedPayload = EncodePayload(payload);
             return encodedPayload;
@@ -132,7 +136,7 @@ namespace Freja.Service
         }
 
 
-        public AuthTicket RequestAuthTicket(string ssn)
+        public AuthTicket RequestAuthTicket(string ssn, List<ReturnAttribute> returnAttributes = null)
         {
             var authRequest = new AuthRequest();
             authRequest.initAuthRequest = CreateEncodedSSNRequest(ssn, "SE", AuthLevel.PLUS);

@@ -34,10 +34,6 @@
         Write-Host "Dll exists"
         $authProviders = Get-AdfsAuthenticationProvider
 
-        if (!(Get-AdfsGlobalAuthenticationPolicy).AllowAdditionalAuthenticationAsPrimary) 
-        {
-            Set-AdfsGlobalAuthenticationPolicy -AllowAdditionalAuthenticationAsPrimary $true -Force | Out-Null
-        }
         $publish.GacInstall($dll)
         $fn = ([System.Reflection.Assembly]::LoadFile($dll)).FullName
         $typeName = "ADFSFrejaSecondFactor.FrejaAdapter, " + $fn.ToString() + ", processorArchitecture=MSIL"
