@@ -7,6 +7,7 @@ using Freja.Model;
 using Freja.Service;
 using Microsoft.IdentityServer.Web.Authentication.External;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -121,26 +122,39 @@ namespace ADFSFrejaSecondFactor
                                 _frejaService = new FrejaService(_httpClient, _frejaMFASettings.FrejaConfig);
                                 Log.WriteEntry("Freja created logic", EventLogEntryType.Information, 335);
                             }
-                            else { Log.WriteEntry("No Settings provided for Freja api", EventLogEntryType.Error, 335); }
+                            else 
+                            { 
+                                Log.WriteEntry("No Settings provided for Freja api", EventLogEntryType.Error, 335); 
+                            }
                             
-                            if (_frejaMFASettings.LdapConfig != null)
+                            if (_frejaMFASettings.UserLookupMethod == null) { _frejaMFASettings.UserLookupMethod = ""; }
+                            switch (_frejaMFASettings.UserLookupMethod.ToUpper())
                             {
-                                //Set up LdapService provided
-                                if (!string.IsNullOrEmpty(_frejaMFASettings.LdapConfig.UserName))
-                                {
-                                    _personService = new PersonServiceLdap(_frejaMFASettings.LdapConfig);
-                                }
+                                case "LDAP":
+                                    if (_frejaMFASettings.LdapConfig != null)
+                                    {
+                                        _personService = new PersonServiceLdap(_frejaMFASettings.LdapConfig);
+                                    }
+                                    else
+                                    {
+                                        Log.WriteEntry("FrejaSecondFactor configuration, didn't get ldap settings", EventLogEntryType.Information, 335);
+                                    }
+                                    break;
+                                case "SQL":
+                                    if (_frejaMFASettings.SqlConfig != null)
+                                    {
+                                        _personService = new PersonServiceSql(_frejaMFASettings.SqlConfig);
+                                    }
+                                    else
+                                    {
+                                        Log.WriteEntry("FrejaSecondFactor configuration, didn't get sql settings", EventLogEntryType.Information, 335);
+                                    }
+                                    break;
+                                default:
+                                    Log.WriteEntry("Unable to load Freja user lookup method. Check that UserLookupMethod is set (LDAP/SQL).", EventLogEntryType.Error, 335);
+                                    throw new ArgumentException();
+                            }
 
-                            }
-                            if (_frejaMFASettings.SqlConfig != null)
-                            {
-                                Log.WriteEntry("Freja, got sqlsettings", EventLogEntryType.Information, 335);
-                                _personService = new PersonServiceSql(_frejaMFASettings.SqlConfig);
-                            }
-                            else
-                            {
-                                Log.WriteEntry("Freja, didn't get sqlsettings", EventLogEntryType.Information, 335);
-                            }
                         }
                         else { Log.WriteEntry("No Settings provided for FrejaMFAAdapter", EventLogEntryType.Error, 335); }
                     }
@@ -214,7 +228,19 @@ namespace ADFSFrejaSecondFactor
             Log.WriteEntry("Starting Freja login with civicno: " + civicNumber, EventLogEntryType.Information, 335);
             try
             {
-                var authTicket = _frejaService.RequestAuthTicket(civicNumber);
+                var attributes = new List<ReturnAttribute>();
+                attributes.Add(new ReturnAttribute { attribute = nameof(ReturnAttributes.SSN) });
+                var authTicket = _frejaService.RequestAuthTicket(civicNumber, attributes);
+                if (authTicket == null)
+                {
+                    Log.WriteEntry("Error in Freja login: Couldn´t get authref code", EventLogEntryType.Error, 335);
+                    return CreateAdapterPresentationOnError(civicNumber, new ExternalAuthenticationException("FrejaResponse_REJECTED", authContext));
+                }
+                if (string.IsNullOrEmpty(authTicket.authRef))
+                {
+                    Log.WriteEntry("Error in Freja login: Couldn´t get authref code", EventLogEntryType.Error, 335);
+                    return CreateAdapterPresentationOnError(civicNumber, new ExternalAuthenticationException("FrejaResponse_REJECTED", authContext));
+                }
                 authResultRequest = new AuthResultRequest() { getOneAuthResultRequest = _frejaService.EncodeAuthTicket(authTicket) };
             }
             catch (Exception ex)
